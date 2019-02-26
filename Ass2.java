@@ -1,53 +1,15 @@
 package hw;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Ass2 {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        boolean gotTheAnswer = false;
-        int idNum = 0;
-        int winNum = 0;
-        int losNum = 0;
-
-        while (!gotTheAnswer) {
-            System.out.println("Input the id number of the team!");
-            if (!sc.hasNextInt()) {
-                System.out.println("Wrong input!");
-                gotTheAnswer = false;
-                sc.nextLine();
-            } else {
-                idNum = sc.nextInt();
-                gotTheAnswer = true;
-            }
-        }
-        gotTheAnswer = false;
-        
-        while (!gotTheAnswer) {
-            System.out.println("Input the number of wins this team has!");
-            if (!sc.hasNextInt()) {
-                System.out.println("Wrong input!");
-                gotTheAnswer = false;
-                sc.nextLine();
-            } else {
-                winNum = sc.nextInt();
-                gotTheAnswer = true;
-            }
-        }
-        gotTheAnswer = false;
-        
-        while (!gotTheAnswer) {
-            System.out.println("Input the number of losses this team has!");
-            if (!sc.hasNextInt()) {
-                System.out.println("Wrong input!");
-                gotTheAnswer = false;
-                sc.nextLine();
-            } else {
-                losNum = sc.nextInt();
-                gotTheAnswer = true;
-            }
-        }
+        int idNum = getFromScanner("Input the id number of the team:");
+        int winNum = getFromScanner("Input the number of wins this team has:");
+        int losNum = getFromScanner("Input the number of losses this team has:");        
         System.out.printf("Team %d \n%d wins\t%d losses\n", idNum, winNum, losNum);
         int totalNum = winNum + losNum;
         System.out.printf("Total number of games played is %d\t%d games remaining\n", totalNum, 25 - totalNum);
@@ -64,4 +26,18 @@ public class Ass2 {
             System.out.println("Number of games remaining is less than or equal to number won.");
         }
     }
+    
+    private static int getFromScanner(String promptInput) {
+        System.out.println(promptInput);
+        Scanner sc = new Scanner(System.in);   
+        try {
+            return sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input! Try again.");
+            
+            return getFromScanner(promptInput);
+        } finally {
+            sc.close();
+        }
+    }        
 }
