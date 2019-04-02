@@ -78,7 +78,7 @@ public class Assignment4 {
 
     public static void checkValidity(int num[]) {
         int[] errorArr = {-2, -2, -8};
-        if(num == errorArr) {
+        if(Arrays.equals(num, errorArr)) {
             throw new InputMismatchException(INTERRUPTION);
         }
     }
