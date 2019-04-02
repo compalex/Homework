@@ -2,13 +2,13 @@ package hw;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Arrays;
 
 /*
 * Assignment 4
 * @author Aliaksandr Yarmak
 */
 public class Assignment4 {
-    
     public static final String INTRO1 = "This program asks user to input 3 nums, then it finds the sum of them and prints a name";
     public static final String INTRO2 = "You need to input '-2', '-2', '-8' consistently to stop the program";
     public static final String PROMPT = "Type in three original integers:    (type in '-2', '-2', '-8' to stop)";
@@ -21,6 +21,7 @@ public class Assignment4 {
     public static final String LARGEST_SUM_INTRO = "The largest value ever computed for the sum is ";
     public static final String SMALLEST_SUM_INTRO = "The smallest value ever computed for the sum is ";
     public static final String NAMES_COUNTER_INTRO = "The total number of time a name was printed: ";
+    public static final String INTERRUPTION = "Interrupted by special combination of numbers.";
     public static int namePrintCounter = 0;
     
     public static void main(String[] args) {   
@@ -35,30 +36,32 @@ public class Assignment4 {
         
         try {
             while (true) {  
-                System.out.println(PROMPT);                
-                int num1 = sc.nextInt();
-                int num2 = sc.nextInt();
-                int num3 = sc.nextInt();
+                System.out.println(PROMPT);
+                int[] num = new int[3];
                 
-                if(num1 == -2 && num2 == -2 && num3 == -8) {
-                    break;
-                }                
-                System.out.printf(NUMS_INTRO, num1, num2, num3);
+                for(int i = 0; i < 3; i++) {
+                    num[i] = sc.nextInt();
+                }
                 
-                int sum = findSum(num1, num2, num3);
+                checkValidity(num);
+                              
+                System.out.printf(NUMS_INTRO, num[0], num[1], num[2]);
+                
+                int sum = findSum(num);
+                
                 System.out.println(SUM_INTRO + sum);
                 
                 printMyName(sum);
                 
-                int evenNums = howManyEven(num1, num2, num3);
+                int evenNums = howManyEven(num);
                 System.out.printf(EVEN_INTRO, evenNums);
                 System.out.println("\n\n");
                 setsCounter++;
                 //the next if-statements are for optional task #2
-                if(sum > largestSum) {
+                if(sum > largestSum || setsCounter == 0) {
                     largestSum = sum;
                 }
-                if(sum < smallestSum) {
+                if(sum < smallestSum || setsCounter == 0) {
                     smallestSum = sum;
                 }
             }
@@ -73,25 +76,21 @@ public class Assignment4 {
         System.out.println(SMALLEST_SUM_INTRO + smallestSum);
     }
 
+    public static void checkValidity(int num[]) {
+        int[] errorArr = {-2, -2, -8};
+        if(num == errorArr) {
+            throw new InputMismatchException(INTERRUPTION);
+        }
+    }
+    
     public static void introduction() {
         System.out.println(INTRO1);
         System.out.println(INTRO2);
     }
     
-    public static int findSum(int num1, int num2, int num3) {
-        if(num1 >= num2) {
-            if(num2 >= num3) {
-                return (num1 + num2);
-            } else {
-                return (num1 + num3);
-            }
-        } else {
-            if(num1 >= num3) {
-                return (num1 + num2);
-            } else {
-                return (num2 + num3);
-            }            
-        }
+    public static int findSum(int num[]) {
+        Arrays.sort(num);
+        return num[2] + num[1];
     }
     
     private static void printMyName(int sum) {
@@ -105,16 +104,13 @@ public class Assignment4 {
         }
     }
     
-    private static int howManyEven(int num1, int num2, int num3) {
+    private static int howManyEven(int num[]) {
         int counter = 0;
-        if (num1 %2 == 0) {
-            counter++;
-        }
-        if (num2 %2 == 0) {
-            counter++;
-        }
-        if (num3 %2 == 0) {
-            counter++;
+        
+        for(int x : num) {
+            if(x %2 == 0) {
+                counter++;
+            }
         }
         return counter;
     }
