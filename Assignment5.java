@@ -10,6 +10,7 @@ import java.util.Scanner;
 enum Result {
     WIN, LOSS, CONTINUE, EXIT
 }
+
 public class Assignment5 {
     public static final String PROMPT_MSG = "Input 2 integer values in the range of 1 to 6. (0 to exit)";
     public static final String INPUT_DISPLAY = "Your input: %d, %d.";
