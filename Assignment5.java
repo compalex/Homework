@@ -59,9 +59,9 @@ public class Assignment5 {
         }
     }
 
-    private static Result outcome(int d1, int d2) {
-        int sum = d1 + d2;
-        if (d1 == 0 || d2 == 0) {
+    private static Result outcome(int die1, int die2) {
+        int sum = die1 + die2;
+        if (die1 == 0 || die2 == 0) {
             return Result.EXIT;
         } else if (sum == 2 || sum == 12) {
             return Result.LOSS;
@@ -74,16 +74,16 @@ public class Assignment5 {
 
     private static void continuation(int sum) {
         System.out.println(PROMPT_MSG);
-        int dice1 = sc.nextInt();
-        int dice2 = sc.nextInt();
-        int currentSum = dice1 + dice2;
-        System.out.printf(INPUT_DISPLAY, dice1, dice2);
+        int die1 = sc.nextInt();
+        int die2 = sc.nextInt();
+        System.out.printf(INPUT_DISPLAY, die1, die2);
         System.out.println();
 
-        if (isValidInput(dice1, dice2)) {
-            if (currentSum == 7) {
+        if (isValidInput(die1, die2)) {
+            int newSum = die1 + die2;
+            if (newSum == 7) {
                 System.out.println(LOSS_MSG);
-            } else if (currentSum == sum) {
+            } else if (newSum == sum) {
                 System.out.println(WIN_MSG);
             } else {
                 System.out.println(CONTINUATION_MSG);
@@ -95,7 +95,7 @@ public class Assignment5 {
         }
     }
 
-    private static boolean isValidInput(int dice1, int dice2) {
-        return (dice1 >= 0 && dice1 <= 6) && (dice2 >= 0 && dice2 <= 6);
+    private static boolean isValidInput(int die1, int die2) {
+        return (die1 >= 0 && die1 <= 6) && (die2 >= 0 && die2 <= 6);
     }
 }
