@@ -1,6 +1,5 @@
 package hw;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 /*
 * Assignment 5
@@ -12,6 +11,8 @@ public class Assignment6 {
     public static final String FIRST_ARR_MSG = "Here's the original array:";
     public static final String SECOND_ARR_MSG = "Here is the new array:";
     public static final String AVERAGE_MSG = "Average of array is %.3f";
+    public static final String CLOSEST_VALUE_MSG = "%.2f is the closest one (%.2f to the average)";
+    public static final String FURTHEST_VALUE_MSG = "%.2f is the furthest one (%.2f from the average)";
     private static Scanner sc = null;
 
     public static void main(String[] args) {
@@ -20,20 +21,30 @@ public class Assignment6 {
         try {
             System.out.println(SIZE_PROMPT_MSG);
             int size = sc.nextInt();
+            
             double[] firstArr = new double[size];            
             System.out.println(ARRAY_PROMPT_MSG);
             firstArr = readData(size, firstArr);
+            
             System.out.println(FIRST_ARR_MSG);
             printArray(size, firstArr);
+            
             double avg = findAverage(size, firstArr);
             System.out.printf(AVERAGE_MSG, avg);
             System.out.println();
+            
+            printSpecialValues(avg, firstArr);
+            
             double[] secondArr = howFarAway(size, avg, firstArr);
             System.out.println(SECOND_ARR_MSG);
             printArray(size, secondArr);
+            
             avg = findAverage(size, secondArr);
             System.out.printf(AVERAGE_MSG, avg);
-        } catch (InputMismatchException e) {
+            System.out.println();
+            
+            printSpecialValues(avg, secondArr);
+        } catch (Exception e) {
             System.err.println(e);
         } finally {
             sc.close();
@@ -73,5 +84,28 @@ public class Assignment6 {
             s[i] = r[i] - avg;
         }
         return s;
+    }
+    
+    private static void printSpecialValues(double avg, double[] array) {
+        double difference = Math.abs(array[0] - avg);
+        double closestVal = difference;
+        double furthestVal = difference;
+        double closestItem = array[0];
+        double furthestItem = array[0];
+        
+        for(int i = 1; i < array.length; i++) {
+            difference = Math.abs(array[i] - avg);
+            if (difference > furthestVal) {
+                furthestVal = difference;
+                furthestItem = array[i];
+            }
+            if (difference < closestVal) {
+                closestVal = difference;
+                closestItem = array[i];
+            }
+        }
+        System.out.printf(CLOSEST_VALUE_MSG, closestItem, closestVal);
+        System.out.println();
+        System.out.printf(FURTHEST_VALUE_MSG, furthestItem, furthestVal);
     }
 }
