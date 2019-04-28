@@ -7,11 +7,10 @@ import java.util.Scanner;
 * Assignment 5
 * @author Aliaksandr Yarmak
 */
-enum Result {
-    WIN, LOSS, CONTINUE, EXIT
-}
-
 public class Assignment5 {
+    public enum Result {
+        WIN, LOSS, CONTINUE, EXIT
+    }
     public static final String PROMPT_MSG = "Input 2 integer values in the range of 1 to 6. (0 to exit)";
     public static final String INPUT_DISPLAY = "Your input: %d, %d.";
     public static final String WIN_MSG = "Congratulations! You win!";
@@ -22,10 +21,10 @@ public class Assignment5 {
     private static Scanner sc = null;
 
     public static void main(String[] args) {
-        boolean needToRepeat = true;
+        boolean isRunning = true;
         sc = new Scanner(System.in);
         try {
-            while (needToRepeat) {
+            while (isRunning) {
                 System.out.println(PROMPT_MSG);
                 int die1 = sc.nextInt();
                 int die2 = sc.nextInt();
@@ -44,9 +43,10 @@ public class Assignment5 {
                     case CONTINUE:
                         System.out.println(CONTINUATION_MSG);
                         continuation(die1 + die2);
+                        break;
                     case EXIT:
                         System.out.println(EXIT_MSG);
-                        needToRepeat = false;
+                        isRunning = false;
                     }
                 } else {
                     System.out.println(ERROR_MSG);
@@ -96,10 +96,6 @@ public class Assignment5 {
     }
 
     private static boolean isValidInput(int dice1, int dice2) {
-        if (dice1 >= 0 && dice1 <= 6 && dice2 >= 0 && dice2 <= 6) {
-            return true;
-        } else {
-            return false;
-        }
+        return (dice1 >= 0 && dice1 <= 6) && (dice2 >= 0 && dice2 <= 6);
     }
 }
