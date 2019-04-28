@@ -19,9 +19,9 @@ public class Assignment6 {
         sc = new Scanner(System.in);
 
         try {
-            System.out.println(SIZE_PROMPT_MSG);
-            int size = sc.nextInt();
             
+            System.out.println(SIZE_PROMPT_MSG);
+            int size = sc.nextInt();            
             double[] firstArr = new double[size];            
             System.out.println(ARRAY_PROMPT_MSG);
             firstArr = readData(size, firstArr);
@@ -36,6 +36,7 @@ public class Assignment6 {
             printSpecialValues(avg, firstArr);
             
             double[] secondArr = howFarAway(size, avg, firstArr);
+            
             System.out.println(SECOND_ARR_MSG);
             printArray(size, secondArr);
             
@@ -98,8 +99,7 @@ public class Assignment6 {
             if (difference > furthestVal) {
                 furthestVal = difference;
                 furthestItem = array[i];
-            }
-            if (difference < closestVal) {
+            } else if (difference < closestVal) {
                 closestVal = difference;
                 closestItem = array[i];
             }
